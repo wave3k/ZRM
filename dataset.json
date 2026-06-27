@@ -1,0 +1,181 @@
+{
+  "system": {
+    "model_name": "ZRM 1.0 (Engine)",
+    "prefix": "⚡ ZRM › ",
+    "rules": {
+      "force_uppercase": false,
+      "show_timestamp": true,
+      "ascii_art_mood": false
+    }
+  },
+  "labels": [
+    "salutation",
+    "presentation",
+    "aide",
+    "quitter",
+    "sys_disk",
+    "sys_network",
+    "project_clean",
+    "git_check",
+    "dir_create",
+    "file_create",
+    "file_rename",
+    "file_delete",
+    "process_kill",
+    "custom_command"
+  ],
+  "trainingData": [
+    { "text": "bonjour", "label": "salutation" },
+    { "text": "salut", "label": "salutation" },
+    { "text": "hello", "label": "salutation" },
+    { "text": "yo", "label": "salutation" },
+
+    { "text": "je m'appelle enzo", "label": "presentation" },
+    { "text": "moi c'est alex", "label": "presentation" },
+    { "text": "mon blaze c'est", "label": "presentation" },
+
+    { "text": "help", "label": "aide" },
+    { "text": "tu peux faire quoi", "label": "aide" },
+    { "text": "quelles sont tes fonctions", "label": "aide" },
+
+    { "text": "au revoir", "label": "quitter" },
+    { "text": "quitter", "label": "quitter" },
+    { "text": "bye", "label": "quitter" },
+
+    { "text": "check l'espace disque", "label": "sys_disk" },
+    { "text": "il me reste de la place", "label": "sys_disk" },
+    { "text": "disque dur plein", "label": "sys_disk" },
+    { "text": "affiche le stockage", "label": "sys_disk" },
+
+    { "text": "check le reseau", "label": "sys_network" },
+    { "text": "quels ports sont ouverts", "label": "sys_network" },
+    { "text": "qui ecoute sur ma machine", "label": "sys_network" },
+    { "text": "affiche les connexions", "label": "sys_network" },
+
+    { "text": "nettoie le projet", "label": "project_clean" },
+    { "text": "clean mon dossier", "label": "project_clean" },
+    { "text": "vire les fichiers inutiles", "label": "project_clean" },
+    { "text": "supprime le cache", "label": "project_clean" },
+
+    { "text": "check le statut git", "label": "git_check" },
+    { "text": "est ce que mon git is clean", "label": "git_check" },
+    { "text": "status de mon repo", "label": "git_check" },
+
+    { "text": "creer un dossier", "label": "dir_create" },
+    { "text": "creer le dossier projet", "label": "dir_create" },
+    { "text": "nouveau dossier", "label": "dir_create" },
+    { "text": "creer dossier src", "label": "dir_create" },
+    { "text": "mkdir test", "label": "dir_create" },
+
+    { "text": "creer un fichier", "label": "file_create" },
+    { "text": "creer le fichier index.js", "label": "file_create" },
+    { "text": "nouveau fichier notes.txt", "label": "file_create" },
+    { "text": "touche un fichier", "label": "file_create" },
+    { "text": "cree le fichier", "label": "file_create" },
+
+    { "text": "renommer vieux en nouveau", "label": "file_rename" },
+    { "text": "renomme fichier.txt en doc.txt", "label": "file_rename" },
+    { "text": "change le nom de", "label": "file_rename" },
+    { "text": "mv ancien nouveau", "label": "file_rename" },
+
+    { "text": "supprimer un fichier", "label": "file_delete" },
+    { "text": "supprime le fichier index.js", "label": "file_delete" },
+    { "text": "supprime le dossier temp", "label": "file_delete" },
+    { "text": "efface le dossier test", "label": "file_delete" },
+    { "text": "delete logs.txt", "label": "file_delete" },
+    { "text": "rm dossier build", "label": "file_delete" },
+    { "text": "supprimer dossier", "label": "file_delete" },
+
+    { "text": "kill le processus", "label": "process_kill" },
+    { "text": "tue le port 3000", "label": "process_kill" },
+    { "text": "kill node", "label": "process_kill" },
+    { "text": "arrete le processus chrome", "label": "process_kill" },
+    { "text": "tue le processus", "label": "process_kill" },
+
+    { "text": "lance la commande bun install", "label": "custom_command" },
+    { "text": "execute la commande node -v", "label": "custom_command" },
+    { "text": "lance bun run dev", "label": "custom_command" },
+    { "text": "lance la commande git push", "label": "custom_command" },
+    { "text": "run command npm start", "label": "custom_command" },
+    { "text": "execute mkdir build", "label": "custom_command" },
+    { "text": "command git push", "label": "custom_command" },
+    { "text": "lance ls -la", "label": "custom_command" },
+    { "text": "run pytest", "label": "custom_command" }
+  ],
+  "responses": {
+    "salutation": {
+      "standard": "Bonjour {name}. Prêt à manager ta machine ?",
+      "repetition": "On est déjà en session, {name}. Quelle commande système veut-tu lancer ?"
+    },
+    "presentation": {
+      "standard": "Enregistré, {name}. Les privilèges de session te sont accordés.",
+      "repetition": "Je sais qui tu es, {name}. Concentrons-nous sur le shell."
+    },
+    "aide": {
+      "standard": "Je suis ZRM, ton assistant système local. Demande-moi de checker le disque, le réseau, nettoyer le cache, gérer les fichiers, killer des processus ou d'exécuter des commandes à la volée.",
+      "repetition": "Utilise '/' pour le menu système, ou lance directement des commandes système personnalisées."
+    },
+    "quitter": {
+      "standard": "Session système close, {name}. À la prochaine.",
+      "repetition": "Fermeture imminente..."
+    },
+    "sys_disk": {
+      "standard": "Analyse de l'espace disque lancée...",
+      "repetition": "Nouvelle vérification du stockage en cours..."
+    },
+    "sys_network": {
+      "standard": "Analyse des connexions réseau actives...",
+      "repetition": "Re-scannage des ports réseau..."
+    },
+    "project_clean": {
+      "standard": "Amorçage du nettoyage de printemps dans le dossier...",
+      "repetition": "Nouveau cycle de nettoyage lancé..."
+    },
+    "git_check": {
+      "standard": "Inspection de l'état du dépôt Git local...",
+      "repetition": "Mise à jour du statut Git..."
+    },
+    "dir_create": {
+      "standard": "Préparation à la création du dossier...",
+      "repetition": "Nouveau dossier en cours de génération..."
+    },
+    "file_create": {
+      "standard": "Génération de votre nouveau fichier en cours...",
+      "repetition": "Création du fichier demandé..."
+    },
+    "file_rename": {
+      "standard": "Traitement de l'opération de renommage...",
+      "repetition": "Renommage du fichier d'origine..."
+    },
+    "file_delete": {
+      "standard": "Traitement de la demande de suppression définitive...",
+      "repetition": "Préparation à une autre suppression..."
+    },
+    "process_kill": {
+      "standard": "Ciblage et extinction forcée du processus en cours...",
+      "repetition": "Arrêt forcé d'un autre processus ciblé..."
+    },
+    "custom_command": {
+      "standard": "Préparation au lancement de votre commande personnalisée...",
+      "repetition": "Lancement d'une nouvelle commande personnalisée..."
+    }
+  },
+  "actions": {
+    "sys_disk": {
+      "win32": "wmic logicaldisk get size,freespace,caption",
+      "default": "df -h / | awk 'NR1 || NR2'"
+    },
+    "sys_network": {
+      "win32": "netstat -ano | findstr LISTENING | more",
+      "default": "ss -tulpn || netstat -ant"
+    },
+    "project_clean": {
+      "win32": "del /s /q *.log 2>nul & echo Fichiers log nettoyes.",
+      "default": "rm -f *.log *.tmp && echo 'Nettoyage des fichiers temporaires effectue.'"
+    },
+    "git_check": {
+      "win32": "git status -s",
+      "default": "git status -s"
+    }
+  }
+}
