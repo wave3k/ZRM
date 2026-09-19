@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ZRM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <div class="brand">
+          <span class="brand-mark">Z</span>
+          <span class="brand-name">ZRM</span>
+        </div>
+        <button class="icon-btn" id="btn-toggle-sidebar" title="Masquer le menu">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+            <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.7"/>
+            <path d="M9 4v16" stroke="currentColor" stroke-width="1.7"/>
+          </svg>
+        </button>
+      </div>
+
+      <button class="new-chat" id="btn-new">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none">
+          <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+        </svg>
+        Nouveau chat
+      </button>
+
+      <nav class="sidebar-nav">
+        <button class="nav-item" data-open-docs>
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none">
+            <path d="M4 6a2 2 0 012-2h4l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H6a2 2 0 01-2-2V6z" stroke="currentColor" stroke-width="1.6"/>
+          </svg>
+          Documents
+          <span class="nav-badge" id="doc-count">0</span>
+        </button>
+        <button class="nav-item" data-scroll-bottom>
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none">
+            <path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Aller en bas
+        </button>
+      </nav>
+
+      <div class="sidebar-recents">
+        <p class="recents-title">Récents</p>
+        <div id="recents"></div>
+      </div>
+
+      <div class="sidebar-foot">
+        <div class="status">
+          <span class="status-dot" id="status-dot"></span>
+          <span id="status-text">chargement…</span>
+        </div>
+      </div>
+    </aside>
+
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn only-mobile" id="btn-mobile-menu" title="Menu">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <div class="topbar-title" id="topbar-title">Nouveau chat</div>
+        <div class="topbar-actions">
+          <button class="ghost-btn" id="btn-docs">Documents</button>
+          <button class="ghost-btn" id="btn-reindex">Indexer</button>
+        </div>
+      </header>
+
+      <section class="chat-scroll" id="chat-scroll">
+        <div class="welcome" id="welcome">
+          <div class="welcome-inner">
+            <div class="welcome-logo">Z</div>
+            <h1>Comment puis-je t'aider&nbsp;?</h1>
+            <p class="welcome-sub">
+              Pose une question sur tes documents. Tout reste sur ta machine.
+            </p>
+          </div>
+        </div>
+        <div class="messages" id="messages"></div>
+      </section>
+
+      <div class="composer-wrap">
+        <div class="composer-tools">
+          <div class="mode-switch" id="mode-switch">
+            <button type="button" class="mode-btn active" data-mode="fast" title="Recherche instantanée dans tes documents">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+              Rapide
+            </button>
+            <button type="button" class="mode-btn" data-mode="llm" title="Réponse rédigée par le modèle local (lent)">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none"><path d="M12 3a6 6 0 00-6 6c0 2 1 3 2 4v3h8v-3c1-1 2-2 2-4a6 6 0 00-6-6z" stroke="currentColor" stroke-width="1.6"/><path d="M10 20h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              Discussion
+            </button>
+          </div>
+          <select class="model-select" id="model-select" title="Modèle de génération">
+            <option value="fast">0.5B — rapide</option>
+            <option value="quality">1.5B — qualité</option>
+          </select>
+          <button type="button" class="icon-btn small" id="btn-settings" title="Réglages du modèle">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+              <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <span class="speed-hint" id="speed-hint"></span>
+        </div>
+        <form class="composer" id="composer">
+          <input
+            type="file"
+            id="file-input"
+            multiple
+            hidden
+            accept=".txt,.md,.markdown,.log,.json,.jsonl,.csv,.tsv,.pdf,.sqlite,.sqlite3,.db"
+          />
+          <button type="button" class="composer-plus" id="btn-attach" title="Joindre un document">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none">
+              <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <div class="composer-attachments" id="attachments"></div>
+          <textarea
+            id="input"
+            rows="1"
+            placeholder="Poser une question"
+            autocomplete="off"
+          ></textarea>
+          <button type="submit" class="composer-send" id="btn-send" title="Envoyer">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none">
+              <path d="M12 19V6M6 12l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </form>
+        <p class="composer-note">
+          ZRM peut se tromper. Vérifie les informations importantes.
+        </p>
+      </div>
+    </main>
+
+    <div class="drawer" id="drawer">
+      <div class="drawer-head">
+        <h2>Documents</h2>
+        <button class="icon-btn" id="drawer-close" title="Fermer">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+            <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <button class="dropzone" id="dropzone">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+          <path d="M12 16V4M7 9l5-5 5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+        <span>Dépose des fichiers ou clique pour parcourir</span>
+        <small>TXT, MD, JSON, CSV, PDF, SQLite</small>
+      </button>
+      <div class="doc-list" id="doc-list"></div>
+    </div>
+    <div class="drawer-backdrop" id="drawer-backdrop"></div>
+
+    <div class="drawer" id="settings">
+      <div class="drawer-head">
+        <h2>Réglages du modèle</h2>
+        <button class="icon-btn" id="settings-close" title="Fermer">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+            <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="settings-body">
+        <label class="field">
+          <span class="field-label">Mode d'exécution</span>
+          <select id="cfg-provider" class="field-input">
+            <option value="auto">Automatique (distant si dispo, sinon local)</option>
+            <option value="remote">Distant uniquement</option>
+            <option value="local">Local uniquement</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span class="field-label">URL du serveur distant</span>
+          <input id="cfg-url" class="field-input" type="text" placeholder="http://127.0.0.1:11434" />
+          <small class="field-hint">
+            Avec le tunnel SSH ouvert, garde <code>http://127.0.0.1:11434</code>.
+            Ollama, llama.cpp server, vLLM, LM Studio et les API cloud compatibles OpenAI fonctionnent.
+          </small>
+        </label>
+
+        <label class="field">
+          <span class="field-label">Clé API <span class="field-opt">(optionnel)</span></span>
+          <input id="cfg-key" class="field-input" type="password" placeholder="laisser vide si aucun auth" />
+        </label>
+
+        <div class="settings-actions">
+          <button type="button" class="btn-ghost-sm" id="cfg-test">Tester la connexion</button>
+          <button type="button" class="btn-primary-sm" id="cfg-save">Enregistrer</button>
+        </div>
+
+        <div class="settings-status" id="cfg-status"></div>
+
+        <div class="settings-block">
+          <h3>Tunnel SSH</h3>
+          <p class="field-hint">
+            Le serveur distant doit être joignable. Sur cette machine, ouvre un tunnel :
+          </p>
+          <pre class="settings-code" id="cfg-tunnel">ssh -N -L 11434:127.0.0.1:11434 root@TON_VPS</pre>
+          <button type="button" class="btn-ghost-sm" id="cfg-copy">Copier la commande</button>
+        </div>
+
+        <div class="settings-block">
+          <h3>Modèles détectés</h3>
+          <div class="settings-models" id="cfg-models"></div>
+        </div>
+      </div>
+    </div>
+    <div class="drawer-backdrop" id="settings-backdrop"></div>
+
+    <div class="toasts" id="toasts"></div>
+
+    <script src="/chart.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>
